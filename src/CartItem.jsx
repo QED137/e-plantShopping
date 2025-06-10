@@ -3,36 +3,27 @@ import { useSelector, useDispatch } from 'react-redux';
 import { removeItem, updateQuantity } from './CartSlice';
 import './CartItem.css';
 
-const CartItem = ({ onContinueShopping }) => {
+// The prop `onContinueShopping` is a function passed down from ProductList
+const CartItem = ({ onContinueShopping }) => { 
   const cart = useSelector(state => state.cart.items);
   const dispatch = useDispatch();
 
-  // 🔢 1. Calculate total cost of all items in cart
   const calculateTotalAmount = () => {
     return cart.reduce((total, item) => {
-      const price = parseFloat(item.cost.substring(1)); // Remove "$"
+      const price = parseFloat(item.cost.substring(1));
       return total + price * item.quantity;
     }, 0).toFixed(2);
   };
 
-  // 🔁 2. Continue shopping handler
-  const handleContinueShopping = (e) => {
-    e.preventDefault();
-    onContinueShopping(); // navigate back to product list
-  };
-
-  // 💲 3. Calculate subtotal for one item
   const calculateTotalCost = (item) => {
     const price = parseFloat(item.cost.substring(1));
     return (price * item.quantity).toFixed(2);
   };
 
-  // ➕ 4. Increment quantity
   const handleIncrement = (item) => {
     dispatch(updateQuantity({ name: item.name, quantity: item.quantity + 1 }));
   };
 
-  // ➖ 5. Decrement quantity or remove item
   const handleDecrement = (item) => {
     if (item.quantity > 1) {
       dispatch(updateQuantity({ name: item.name, quantity: item.quantity - 1 }));
@@ -41,12 +32,10 @@ const CartItem = ({ onContinueShopping }) => {
     }
   };
 
-  // ❌ 6. Remove item
   const handleRemove = (item) => {
     dispatch(removeItem({ name: item.name }));
   };
-
-  // 🛒 7. Optional: Checkout placeholder
+  
   const handleCheckoutShopping = (e) => {
     alert('Functionality to be added for future reference');
   };
@@ -64,7 +53,6 @@ const CartItem = ({ onContinueShopping }) => {
             <div className="cart-item-details">
               <div className="cart-item-name">{item.name}</div>
               <div className="cart-item-cost">{item.cost}</div>
-
               <div className="cart-item-quantity">
                 <button
                   className="cart-item-button cart-item-button-dec"
@@ -80,11 +68,9 @@ const CartItem = ({ onContinueShopping }) => {
                   +
                 </button>
               </div>
-
               <div className="cart-item-total">
                 Subtotal: ${calculateTotalCost(item)}
               </div>
-
               <button
                 className="cart-item-delete"
                 onClick={() => handleRemove(item)}
@@ -97,7 +83,12 @@ const CartItem = ({ onContinueShopping }) => {
       )}
 
       <div className="continue_shopping_btn">
-        <button className="get-started-button" onClick={handleContinueShopping}>
+        {/*
+          THIS IS THE FIX:
+          The button's onClick handler now calls the `onContinueShopping` prop directly.
+          This prop IS the handleContinueShopping function from the parent (ProductList).
+        */}
+        <button className="get-started-button" onClick={onContinueShopping}>
           Continue Shopping
         </button>
         <br />

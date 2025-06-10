@@ -1,3 +1,103 @@
+// import React, { useState } from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
+// import './ProductList.css'; 
+// import CartItem from './CartItem';
+// import { addItem } from './CartSlice';
+
+// // --- Static data and styles remain the same ---
+// const plantsArray = [
+//     {
+//         category: "Air Purifying Plants",
+//         plants: [
+//             { name: "Snake Plant", image: "https://cdn.pixabay.com/photo/2021/01/22/06/04/snake-plant-5939187_1280.jpg", description: "Produces oxygen at night, improving air quality.", cost: "$15" },
+//             { name: "Spider Plant", image: "https://cdn.pixabay.com/photo/2018/07/11/06/47/chlorophytum-3530413_1280.jpg", description: "Removes formaldehyde and xylene from the air.", cost: "$12" }
+//         ]
+//     },
+//     {
+//         category: "Aromatic Fragrant Plants",
+//         plants: [
+//             { name: "Lavender", image: "https://images.unsplash.com/photo-1611909023032-2d6b3134ecba?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", description: "Calming scent, used in aromatherapy.", cost: "$20" },
+//             { name: "Jasmine", image: "https://images.unsplash.com/photo-1592729645009-b96d1e63d14a?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", description: "Sweet, exotic fragrance, blooms at night.", cost: "$18" }
+//         ]
+//     },
+//     {
+//         category: "Insect Repellent Plants",
+//         plants: [
+//             { name: "Marigold", image: "https://cdn.pixabay.com/photo/2022/02/22/05/45/marigold-7028063_1280.jpg", description: "Deters mosquitoes and other pests.", cost: "$10" },
+//             { name: "Citronella Grass", image: "https://cdn.pixabay.com/photo/2019/06/19/20/14/citronella-4286303_1280.jpg", description: "Natural mosquito repellent.", cost: "$22" }
+//         ]
+//     }
+// ];
+// const allPlants = plantsArray.flatMap(category => category.plants);
+// const styleObj = { backgroundColor: '#4CAF50', color: 'white', padding: '15px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '20px' };
+// const styleObjUl = { listStyleType: 'none', margin: 0, padding: 0, display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '200px' }; // Adjusted width
+// const styleA = { color: 'white', fontSize: '30px', textDecoration: 'none' };
+
+// function ProductList() {
+//     const [showCart, setShowCart] = useState(false);
+//     const [addedToCart, setAddedToCart] = useState({});
+//     const dispatch = useDispatch();
+//     const cartItems = useSelector(state => state.cart.items);
+//     const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
+//     const handleAddToCart = (plant) => {
+//         dispatch(addItem(plant));
+//         setAddedToCart(prevState => ({
+//             ...prevState,
+//             [plant.name]: true
+//         }));
+//     };
+
+//     const handleCartClick = (e) => {
+//         e.preventDefault();
+//         setShowCart(true);
+//     };
+
+//     // This function is passed to the CartItem component to allow it to switch back to the product view.
+//     const handleContinueShopping = (e) => {
+//         if (e) e.preventDefault();
+//         setShowCart(false);
+//     };
+
+//     return (
+//         <div>
+//             <div className="navbar" style={styleObj}>
+//                 <a href="/" style={styleA}>Plant Palace</a>
+//                 <ul style={styleObjUl}>
+//                     {/* The "Home" button has been removed. */}
+//                     <li><a href="#" onClick={handleCartClick} style={{color: 'white', textDecoration: 'none'}}>Cart <span>({totalItems})</span></a></li>
+//                 </ul>
+//             </div>
+
+//             {!showCart ? (
+//                 <div className="product-grid">
+//                     {allPlants.map((plant) => (
+//                         <div className="product-card" key={plant.name}>
+//                             <img src={plant.image} alt={plant.name} className="product-image" />
+//                             <div className="product-details">
+//                                 <h3 className="product-title">{plant.name}</h3>
+//                                 <p className="product-description">{plant.description}</p>
+//                                 <p className="product-cost">{plant.cost}</p>
+//                                 <button 
+//                                     className={`product-button ${addedToCart[plant.name] ? 'added' : ''}`}
+//                                     onClick={() => handleAddToCart(plant)}
+//                                     disabled={addedToCart[plant.name]}
+//                                 >
+//                                     {addedToCart[plant.name] ? 'Added to Cart' : 'Add to Cart'}
+//                                 </button>
+//                             </div>
+//                         </div>
+//                     ))}
+//                 </div>
+//             ) : (
+//                 <CartItem onContinueShopping={handleContinueShopping} />
+//             )}
+//         </div>
+//     );
+// }
+
+// export default ProductList;
+
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './ProductList.css';
